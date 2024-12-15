@@ -144,10 +144,10 @@ def parse_robots_file(file_path: str) -> list[Robot]:
 
 
 def main():
-    input_file = "base_example.txt"
+    input_file = "base_input.txt"
     robots = parse_robots_file(input_file)
-    #  space = Space(width=101, height=103)
-    space = Space(width=11, height=7)
+    space = Space(width=101, height=103)
+    #  space = Space(width=11, height=7)
     space.add_robots(robots)
     space.simulate(seconds=100)
     robots_in_quadrants = space.count_robots_in_quadrants()

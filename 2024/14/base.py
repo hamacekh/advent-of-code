@@ -88,19 +88,18 @@ class Space:
             robot.roll_over_bounds(Point2(self.width, self.height))
 
     def partition_to_quadrants(self) -> list[Square]:
-        x_divider_float = (self.width / 2) + 1
-        y_divider_float = (self.height / 2) + 1
+        target_width = self.width // 2
+        target_height = self.height // 2
         return [
-            Square(Point2(0, 0), Point2(floor(x_divider_float), floor(y_divider_float))),
-            Square(Point2(ceil(x_divider_float), 0), Point2(self.width, floor(y_divider_float))),
-            Square(Point2(0, ceil(y_divider_float)), Point2(floor(x_divider_float), self.height)),
-            Square(Point2(ceil(x_divider_float), ceil(y_divider_float)), Point2(self.width, self.height))
+            Square(Point2(0, 0), Point2(target_width, target_height)),
+            Square(Point2(self.width - target_width, 0), Point2(self.width, target_height)),
+            Square(Point2(0, self.height - target_height), Point2(target_width, self.height)),
+            Square(Point2(self.width - target_width, self.height - target_height), Point2(self.width, self.height)),
         ]
-    
+
     def print_robot_positions(self) -> None:
         for i, robot in enumerate(self.robots, start=1):
             print(f"Robot {i}: Position={robot.position}")
-
 
     def ascii_art_positions(self) -> None:
         grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
@@ -108,7 +107,6 @@ class Space:
             grid[robot.position.y % self.height][robot.position.x % self.width] += 1
         for row in reversed(grid):
             print(''.join(str(cell) if cell > 0 else '.' for cell in row))
-
 
     def count_robots_in_quadrants(self):
         squares = self.partition_to_quadrants()
@@ -143,7 +141,6 @@ def parse_robots_file(file_path: str) -> list[Robot]:
         print(f"Error occurred while parsing the file: {e}")
 
     return robots
-
 
 
 def main():

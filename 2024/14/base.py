@@ -99,12 +99,12 @@ class Space:
 
     def print_robot_positions(self) -> None:
         for i, robot in enumerate(self.robots, start=1):
-            print(f"Robot {i}: Position={robot.position}")
+            print(f"Robot {i}: Position={robot.positions}")
 
     def ascii_art_positions(self) -> None:
         grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
         for robot in self.robots:
-            grid[robot.position.y % self.height][robot.position.x % self.width] += 1
+            grid[robot.positions.y % self.height][robot.positions.x % self.width] += 1
         for row in reversed(grid):
             print(''.join(str(cell) if cell > 0 else '.' for cell in row))
 
